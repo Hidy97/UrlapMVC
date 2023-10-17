@@ -6,6 +6,7 @@ class UrlapController{
         console.log("constr")
         this.URLAPMODEL= new UrlapModel()
         this.URLAPVIEW = new UrlapView($(".urlap"), this.URLAPMODEL.leiro)
+
         /**
          * íGY ÉRÜNK EL DOLGOKAT
         //console.log(this.URLAPMODEL.getLeiro())

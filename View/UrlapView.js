@@ -2,6 +2,9 @@ import textUrlapElem from "./textUrlapElem.js";
 
 class UrlapView {
     #leiro = {}
+    #urlapElemLista = []
+    #valid = true
+    #urlapAdatok = []
     constructor(szuloElem, leiro) {
         this.#leiro = leiro;
         this.szuloElem = szuloElem;
@@ -10,9 +13,29 @@ class UrlapView {
         this.formElem = this.szuloElem.children("form")
         //console.log(this.formElem)
         this.#urlapLetrehoz()
-        this.submitElem=$("#submit")
+        this.submitElem = $("#submit")
         this.submitElem.on("click", (event) => {
             event.preventDefault()
+            this.#valid = true
+
+            this.#urlapElemLista.forEach((elem) => {
+                //console.log(elem.valid)
+                this.#valid = this.#valid && elem.valid
+                console.log(elem.valid)
+                //console.log("Nem valid az űrlap")
+            })
+            if (this.#valid) {
+                console.log("Valid az űrlap")
+                this.#urlapElemLista.forEach((elem) => {
+                    let ertek = elem.ertek
+                    let kulcs = elem.key
+                    /**kontrollerbe írja ki */
+                    this.#urlapAdatok[kulcs] = ertek
+                    console.log(this.#urlapAdatok)
+                })
+            } else {
+                console.log("Nem valid az űrlap")
+            }
         })
     }
 
@@ -21,11 +44,11 @@ class UrlapView {
             switch (this.#leiro[key].type) {
                 case "text":
                     //this.#textElem(key)
-                    new textUrlapElem(key, this.#leiro[key], this.formElem)
+                    this.#urlapElemLista.push(new textUrlapElem(key, this.#leiro[key], this.formElem))
                     break;
                 case "number":
                     //this.#numberElem(key)
-                    new textUrlapElem(key, this.#leiro[key], this.formElem)
+                    //this.#urlapElemLista.push(new textUrlapElem(key, this.#leiro[key], this.formElem))
                     break;
                 default:
                     break;
